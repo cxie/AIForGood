@@ -1,0 +1,101 @@
+\newsection
+\subsection{Economics}
+\label{sec:economics}
+\sectionauthors{Zanele Munyikwa, Mina Lee, Erik Brynjolfsson}
+
+Foundation models have the potential to substantially improve overall living standards by increasing productivity and innovation. 
+These models can be deployed to substitute for human labor, augment humans, or help in the discovery of new tasks and opportunities, 
+which can lead to increased concentration of ownership and power, or more decentralization. 
+On a broader level, the result can be either increased inequality due to potential centralization (\refsec{fairness}, \refsec{ethics}), or more broadly shared prosperity due to the easier adaptation of foundation models for a wide range of applications (\refsec{introduction}).
+The ultimate outcomes on all these dimensions are not dictated by technology or economics, 
+but by the choices and actions of technologists, policymakers, managers, workers, and other members of society.
+
+Foundation models can be thought of as what economists refer to as a \emph{general-purpose technology} \citep{Bresnahan1995}. 
+General-purpose technologies refer to technologies like the steam engine and electricity,
+which drive waves of transformation and productivity growth due to their pervasiveness, improvement over time, and ability to spawn complementary innovations (a host of products and services that revolve around one core product). 
+While foundation models may not be pervasive at the moment, they seem poised to be the basis of widespread technological innovations, 
+and have the key hallmarks of a general-purpose technology.
+As a result, these models are likely to be economically important.
+In considering the impact of foundation models on the economy, 
+we will focus on three broad areas of impact: productivity, wage inequality, and ownership.
+
+
+\subsubsection{Productivity and Innovation}
+Foundation models are likely to substantially increase both productivity and innovation. 
+Productivity growth is one of the main contributing factors to boosting living standards, as it increases the wealth of nations and addresses a host of challenges from poverty and healthcare to the environment and education.
+
+Productivity is defined as output per unit input.\footnote{Note that when properly measured, productivity is not just a matter of counting units produced or hours work, but also accounts for quality changes. Therefore, an increase in quality for a given amount of labor, such as more interesting fiction, also counts as an increase in productivity.}
+One way to boost productivity is to reduce the denominator; for instance, enabling a company's advertisements to be written with fewer copywriters or fewer labor hours per copywriter lowers the number of units of input. 
+Productivity can also be boosted by increasing the numerator, for instance by enabling a software developer to write more code in a given time.
+If the growth in the numerator is great enough, this can lead to more people developing software, not fewer, even as productivity improves~\citep{david2015there}.  
+In many tasks, we have already observed machine learning systems increasing productivity. 
+For instance, an autocomplete system for clinical documentation reduces keystroke burden of clinical concepts by 67\% \citep{pmlr-v126-gopinath20a}.
+Likewise, the potential for foundation models to affect productivity spans almost every industry and many occupations. 
+Considering language alone, an analysis of U.S. occupations using the US Department of Labor's O*NET database shows that many occupations involve the types of language-related work that could be affected by foundation models. 
+Approximately 13\% of occupations have a \textit{primary} task that is related to writing, and the total wage bill of these occupations (annual salary multiplied by the number of individuals employed in the occupation) is over 675 billion dollars. 
+%This suggests that even a 10\% improvement in productivity in these areas would create over 60 billion dollars of value. 
+%\pl{primary (not sole) task involves writing, so that could mean 60\% of the job is writing, so there would have to be another discount factor?} [zanele response] fair enough, I don't have a method to calculate the discount factor here, so I'll remove this claim. alternative is to assume primary task is a certain percentage of the job 25-50% but that could be bold. 
+However, the potential impact of foundation models extends beyond language. 
+They will also have effects on diagnostic imaging in medicine, graphic design, music\footnote{https://www.landr.com/},
+and many other tasks where people are creating something that is similar to something else that already exists~\citep{winkler2019derm,ramesh2021zeroshot}.
+
+Perhaps the most profound, if still speculative, effect of foundation models is their potential to enhance creativity and boost the rate of innovation itself.
+For instance, DALL·E ~\citep{ramesh2021zeroshot} could transform the market for illustrations much as inexpensive cameras revolutionized photography. 
+If these models enable humans to develop new ways to write new songs and novels (\refsec{interaction}), discover variants of drug molecules (\refsec{healthcare}), extend patents (\refsec{law}), build innovative software applications, or develop new business processes, then not only the \textit{level} of productivity, but the \textit{rate} of growth of productivity would be increased.
+In this way, foundation models have some of the characteristics of the ideas or blueprints in Paul Romer's growth models~\citep{romer1990endogenous}, or even meta-ideas (ideas about ideas) which, unlike most other goods, are non-rival, thus speeding growth.
+
+It is worth noting that changes in productivity are not always visible in the official statistics, because many aspects of input and output are difficult to measure ~\citep{BrynjolfssonErik2019Hswm}.
+As a result, the benefits and costs of foundation models will not be fully captured by traditional productivity metrics, nor by related metrics like gross domestic product (GDP) or price levels (the average of current prices across the entire spectrum of goods and services).
+This is especially true for general purpose technologies historically, since they are catalysts for a cascade of secondary innovations that often transform the set of goods and services in the economy, 
+and even the nature of production and innovation over a period of years or even decades.
+
+
+\subsubsection{Wage inequality}
+Even if foundation models increase average productivity or income, there is no economic law that guarantees everyone will benefit.
+This is because not all tasks will be affected to the same extent.
+More importantly, the effects of foundation models on the demand for labor (and thus employment and wages) can be either positive or negative, regardless of productivity growth~\citep{brynolfsson2011race,brynjolfsson2017can}. 
+When a technology substitutes for human labor in completing tasks, it tends to reduce demand for the workers doing those tasks. 
+This depresses employment and wages. 
+However, when a technology complements labor, or facilitates the creation of new opportunities or tasks, it tends to increase labor demand~\citep{acemoglu2019automation}. 
+Employment can (and often does) go up, even as productivity increases.
+For instance, the invention of the airplane created the demand for an entirely new occupation, the airline pilot.
+In turn, the development of jet engines was complementary to human pilots, further increasing demand for them.
+Similarly, the effects of foundation models on employment, wages, and income inequality will differ depending on how they are used.
+
+While the industrial revolution mainly transformed physical work, foundation models are likely to transform tasks involving cognitive work, like content creation and communication. 
+In general, since foundation models are intermediary assets that often possess strong generative capabilities, we envision that they will be able to augment humans in many creative settings, rather than replace humans as there are still significant limitations in using these models stand-alone for open-ended generative tasks \citep{see2019}.
+As we describe in \refsec{interaction}, foundation models may also power systems that users can leverage to co-construct novel forms of art or more efficiently prototype new applications.
+Fluid human-machine and human-in-the-loop interaction will require advances in interface design (\refsec{interaction}) as well as fundamental improvements in the interpretability (\refsec{interpretability}) and robustness (\refsec{robustness}) of these models, so that humans can understand model behavior and expect models to perform well in diverse contexts.
+
+\subsubsection{Centralization}
+\label{sec:economics-centralization}
+Another key determinant of foundation models' economic impact is who owns data and models. 
+In particular, pushing the frontier of foundation models has thus far primarily been the purview of large corporate entities. 
+As a result, the ownership of data and models are often highly centralized, leading to market concentration (\refsec{ethics}). 
+In turn, this can lead to significant centralization of decision rights and power, reducing income and opportunities for those who don't have ownership.
+To counterbalance this centralization, there have been grassroots efforts to open source AI research such as Masakhane, EleutherAI, and HuggingFace, or build foundation models through distributed training. 
+However, it likely that the gap between the private models that industry can train and the ones that are open to the community will remain large due to foundation models' dependence on massive amount of data and computational resources (\refsec{environment}).\footnote{Lambda Lab estimates that GPT-3 training costs over \$4.6M, research and development costs between \$11.4M and \$27.6M, hardware required to run GPT-3 costs between \$100K and \$150K without factoring in other costs (electricity, cooling, backup, etc.), and running costs a minimum of \$87K per year. (\url{https://bdtechtalks.com/2020/09/21/gpt-3-economy-business-model})}
+
+\subsubsection{Other considerations}
+This short chapter is not meant to be comprehensive of all the economic effects of foundation models. 
+In addition to affecting productivity, wage inequality, and ownership, 
+foundation models may also have significant effects on job quality and job satisfaction.
+For instance, they may increase job satisfaction by automating repetitive, uninteresting parts of work, or decrease satisfaction by increasing the pace of work, thereby inducing more frequent burnout.  
+As discussed in \refsec{fairness} and \refsec{ethics}, they can also amplify and perpetuate bias, often in unexpected ways, or be used as a tool for reducing it.  
+Foundation models can facilitate global trade and remote work,
+just as earlier uses of machine translation systems had significant effects in these areas \citep[\eg][]{Brynjolfsson2019}.
+There may also be significant environmental effects (\refsec{environment}), as well as unexpected and unanticipated effects on the rate and direction of occupational change and business transformation in an economy. 
+More broadly, given the emergent capabilities of foundation models, we should expect new unknown unknowns to arise that are difficult to predict, and which may have substantial follow-on effects.\footnote{As an example of a secondary effect, consider that the invention of the automobile influenced the development and expansion of the suburbs.}
+ 
+In summary, foundation models are poised to be an important general-purpose technology of our era.
+They have potential to increase living standards substantially, but also pose risks of increasing inequality and concentrating power.
+The economic implications of these technologies are not predetermined, but rather depend on how technologists, policymakers, managers, workers, and other stakeholders answer challenges such as:
+\begin{itemize} 
+\item   How can we harness the potential of foundation models to boost productivity?
+\item  	Can we develop models that enhance creativity and boost the rate of innovation?
+\item   Will the benefits and control rights be limited to a few or widely shared?
+\end{itemize}
+Understanding the economic potential of these systems is the first step to guiding them in directions that match our values.
+
+
+ 

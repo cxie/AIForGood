@@ -1,0 +1,203 @@
+\newsection
+\subsection{Ethics of scale}
+\label{sec:ethics}
+\sectionauthors{Kathleen Creel, Dallas Card, Rose E. Wang, Isabelle Levent, Alex Tamkin, Armin W. Thomas, Lauren Gillespie, Rishi Bommasani, Rob Reich}
+
+The widespread adoption of foundation models poses ethical, social, and political challenges in addition to concerns about increased inequity, the subject of \refsec{fairness}. 
+In this section, we discuss social, political, and ethical risks  related to the scale of application of foundation models, such as homogenization and the concentration of power, the norms and release strategies appropriate to address them, and concerns about the broader political economy in which foundation models are developed and deployed. 
+
+\subsubsection{Homogenization and scale} 
+ 
+If the same model is used across a variety of domains with minimal adaptation, the strengths, weaknesses, biases, and idiosyncrasies of the original model will be amplified (\refsec{fairness}). 
+This is true of the widespread adoption and reliance on any standardized technology. 
+Similar to how a failure in the manufacturing of a part used in many cars or airplanes could have widespread and severe consequences across sectors, a bias or failure of service \textit{intrinsic} to a foundation model could ripple outwards. 
+However, the current uninterpretability (\refsec{interpretability}) of foundation models and their task-agnostic training makes predicting, understanding, and addressing these weaknesses challenging.  
+If, as seems likely, foundation models become widely adopted, foundation model developers bear greater responsibilities of care than standard model developers, as their choices in design and deployment  have widespread implications \citep{Arendt1987}. 
+
+The defining feature of foundation models\dash{}their capacity to be usefully adapted for a multiplicity of tasks\dash{}is what makes them likely to be widely adopted for a vast range of socially consequential tasks. 
+In contrast to the current distributed and varied model of decision making, employing many adaptations of the same foundation model for multiple automated decision-making tasks means that decision subjects may face a more homogeneous set of judgments rooted in the underlying foundation model. 
+
+This algorithmic monoculture \citep{kleinberg2021} could lead to consistent and arbitrary rejection, mis-classification, or ill-treatment of individual decision subjects \citep{Gandy2021}. 
+We will call this \textit{homogenization} \citep{creel2021}.  
+For example, \refsec{data-solutions} discusses data quality issues that lead to undesirable behavior on subpopulations of data, where subpopulations can be produced by any filter that stratifies the data, including by social group  (see related discussions in \refsec{interpretability-behavior} and \refsec{robustness-advantages}). 
+Until improvements are made in data quality tooling (\refsec{data-solutions}) and the ability to identify slices of data on which the model under-performs  \citep{chung2019slice, goel2021robustnessgym}, 
+a foundation model might consistently fail to provide accurate information or services to a subgroup of people (see also \refsec{robustness}.  
+
+Homogenization has the potential to amplify bias; to standardize bias, compounding injustices rather than distributing them; and to amplify arbitrary exclusion \citep{creel2021, Gandy2021}. 
+For example,~\citet{zhou2021} have argued that BERT encodes an Anglocentric similarity metric \textit{by default}, one that could be harmful if applied across contexts where foundation models are applied. 
+The application of foundation models across domains has the potential to act as an epistemically and culturally homogenizing force, spreading one implicit perspective, often a socially dominant one, across multiple domains of application. 
+
+Existing trends in standardization of training corpora are likely to be exacerbated  in foundation models due to the massive scale of both unlabeled and labeled data needed. 
+To the extent that models train on similar data, they are likely to acquire similar patterns of behavior, biases (\refsec{fairness-sources}), and errors. 
+Previous high-effort data curation and labeling efforts such as ImageNet have standardized training corpora. 
+In doing so, they have also standardized errors: models trained on ImageNet often rely on the same ``spurious cues'' and ``shortcuts'', for example using background textures like green grass to predict foreground object classes such as cows \citep{geirhos2020shortcut, hendrycks2021natural}.  
+Despite their increased robustness to many types of distribution shifts (\refsec{robustness-advantages}), foundation models and other large models have been no less likely to learn spurious correlations (\refsec{robustness-challenges}), and are therefore likely to learn similar errors if trained on the same datasets. Similar effects may arise due to the choice of publicly available unlabeled data.  
+Many foundation models are trained on unlabeled corpora that are chosen for their convenience and accessibility, for example public internet data \citep{caswell2021}, rather than their quality. 
+However, publicly accessible data, whether labeled or unlabeled, is often outweighed by proprietary data in the training corpora of many proprietary foundation models, as discussed in \citep{marr2017} and \refsec{data-desiderata}. 
+Therefore more research is needed on the extent to which training on similar data homogenizes correlations within foundation models and the extent to which this homogenization might cause uniform failures in adapted derivatives of the model (unless constraints are applied to eliminate the behavior during each adaptation, as discussed in \refsec{adaptation-usecases}). 
+
+Homogenization is not inevitable.  
+As model developers intentionally broaden the range of perspectives represented in their datasets (\refsec{fairness-sources}), more research is needed on the capacity of foundation models to deliver a diversity of perspectives when used for generative tasks. 
+For example, \citet{sheng2021revealing} have demonstrated that dialogue systems that adopt ``personas'' of specific demographic groups behave differently on measures of social bias. In addition to choosing between ``personas'' with the goal of avoiding bias, ``personas'' that are diverse along a variety of cognitive and demographic axes could also be used to generate a broader range of coherent outputs for generative tasks.  
+There remain many open questions about how to balance diversity of outputs with relevance and utility to an individual user.\footnote{For possible approaches to implementation, see the discussions of controllable generation in \citep{keskar2019ctrl} and \refsec{adaptation-usecases} and general discussions in \citep{dinan21}.} 
+
+
+\subsubsection{Surveillance, exclusion, and power}
+\label{sec:ethics-surveillance}
+
+A key premise of foundation models is that massive unlabeled datasets can be combined with vast computational resources to create a basis from which numerous products can be derived for a variety of applications. This paradigm shift has the potential to alter social structures and shift power, establishing or entrenching the influence of model creators \citep{zimmerman_2020}. 
+We discuss three potential implications below.
+
+\paragraph{Mass data collection and surveillance.} 
+
+Whereas collecting a labeled dataset typically requires working with domain experts and understanding the problems with and limitations of such data, the need for exceptionally large amounts of data in training foundation models has encouraged some researchers to emphasize \emph{quantity} rather than quality.\footnote{For example, \citet{ding.2021} collected 30 million text-image pairs, chose not to address artefacts such as watermarks and white edges, despite their impact on model quality.} 
+Though preprocessing can help improve the quality of this data \citep[\eg][]{brown2020gpt3}, the scale involved necessitates automated approaches, which may be blunt or poorly documented \citep{dodge.2021.documenting}.
+
+Although there is an evolving landscape of data protection legislation (\eg GDPR in Europe), a variety of questionable practices continue to be used in acquiring data, from opaque policies \citep{obar.2020} and the use of ``dark patterns'' (\ie manipulative interfaces \citep{narayanan.2020}) to outright violation of terms of service. 
+Indeed, this was essentially the strategy taken by Clearview AI\dash{}a company which scraped photos from social media, without user consent, and in violation of platforms' terms of service, for the purpose of developing facial classification software. 
+The company was nevertheless able to sell this technology to police departments and other organizations, in many cases without the knowledge of state lawmakers or department heads \citep{mac.2021}. 
+To the extent that the paradigm of foundation models increases the value of being first to have the largest possible dataset for any particular domain, this may further encourage actors to pursue aggressive data collection, even when that pursuit is legally questionable or contrary to user expectations \citep{nissenbaum.2009, zuboff.2018}.
+
+The importance of data to foundation models also means that organizations already engaged in widespread data collection will be in a strong position to develop such models, and will likely have incentive to maintain this advantage. 
+To the extent that derivative products could themselves be used to collect additional data (\eg in surveillance or health diagnostic applications), developers of foundation models may seek to ensure that they obtain ownership of such data. 
+Thus, even though a key advantage of the foundation model paradigm is the ability to generate adapted derivatives, the developers of foundation models might seek to license their work in a way that ensures that data flows back to them from all adapted derivatives.\footnote{As a less sophisticated example, consider the credit scoring industry, which has been able to position itself such that information flows back to central data brokers as people use its products (as in vetting loan applications), and individuals have little choice but to participate \citep{lauer.2017}.}
+
+\paragraph{Concentration of power.} 
+
+Although the absolute cost of computation has become dramatically cheaper over time, the training of the largest foundation models currently requires computational resources that put their development beyond the reach of all but a few institutions and organizations (\refsec{environment}). Thus, the question of who has access to the relevant computational resources and data will likely determine who is able to produce cutting-edge foundation models in the coming years (see also \refsec{economics-centralization}).
+
+GPT-3 was at least partly an experiment in scale, showing that major gains could be achieved by scaling up the model size, amount of data, and training time, without major modeling innovations. 
+Although there is extensive ongoing research into reducing the amount of resources required in training such models (see \refsec{training}), OpenAI's work suggests that there are still gains to be had from even larger scale efforts \citep{kaplan2020}, and it seems plausible that other organizations may seek to follow this path in other domains (for example, see \citep{jurassic1}).
+
+If scale does turn out to be critical to success, the organizations most capable of producing competitive foundation models will be the most well-resourced:  venture-funded start-ups, already-dominant tech giants, and state governments.  This raises potential concerns about market concentration, and might indicate the kind of incumbent monopoly or oligopoly that currently exists in extreme capital-intensive industries such as defense and semi-conductor manufacturing \citep{carril.2020}.
+
+Moreover, this centralization of power raises concerns about the ability of currently-marginalized individuals and communities to participate in the development of the foundation model development process \citep{kalluri.2020}.  Especially within the realm of government services, the adoption of foundation models could further transfer decision making power from governments to corporate service providers, and introduce additional barriers to due process and accountability \citep{citron.2008}. Nevertheless, more grassroots efforts (\eg Masakhane, EleutherAI, HuggingFace) provide encouraging alternatives, and there is extensive work on ways to incorporate participatory or value-sensitive design  \citep{friedman.2019, prabhakaran.2020}.
+
+\paragraph{Fueling widespread automated decision-making.}
+
+Recent years have seen a dramatic expansion in the use of automated decision-making systems in industry and government \citep{oneil.2016, engstrom2020government}. 
+Although many of the concerns over such automation are not specific to foundation models, the generative abilities of models such as GPT-3, as well as the impressive performance on benchmark tasks
+(\eg \citet{devlin2019bert}), have the potential to prompt a less-than-careful adoption of this technology by, for example, administrative agencies, many of which lack the expertise necessary to understand sophisticated ML systems \citep{calo.2021}. 
+As such, it is especially important to communicate clearly about the realistic capabilities and limitations of foundation models.
+
+Most automated decision-making systems will exist as parts of broader sociotechnical systems in which humans play key roles \citep{selbst.2018}.\footnote{For an extended study of how humans interact with automated judgements, including discussion of both positive and negative automation biases, see \citet{hidalgo2021how}.} 
+As such, there is no guarantee that even large improvements in performance on standardized evaluations will translate into the desired outcomes in the real world (especially if systems are deployed without careful consideration or ongoing evaluation).
+For example, research has shown that judges may re-impose racial prejudice in interpreting the outputs of a risk assessment system \citep{albright.2019}, or otherwise impose their own biases \citep{stevenson.2021}. 
+Ongoing evaluation with proper ecological validity \citep{vries2020ecological} will be critical in this regard, but may not stop potentially dangerous or costly systems from being adopted without adequate evidence \citep{ferguson.2017}. 
+Research is ongoing on methods of refusal: ways for individuals to opt out of participation in foundation models and their adapted derivatives, either as data or decision subjects, without repercussions   \citep{benjamin_ruha_bioethics}.
+
+In short, the existing problems with algorithmic decision making will be seen in the functioning of foundation models once they are deployed. And to the extent that adopting foundation models accelerates a shift from human to machine decision making, foundation models accentuate the concerns with automation. 
+Although there are not obvious solutions to these challenges, it is important to make questions about how foundation models will impact power part of the conversation about their creation; to communicate with civil society organizations, policy makers, and citizens about the capabilities and limitations of such systems; and to strive for broader dialogue among diverse segments of society about the adoption of such models. 
+
+
+\subsubsection{Norms} 
+
+Public policy and formal regulation by law (\refsec{legality}) play an essential role in creating the infrastructure for technological innovation as well as mitigating the potentially harmful effects of widely disseminated technologies. 
+As illustrated by the decades-long gap between the Tuskegee Syphilis experiments and the development of research protocols and institutions like the IRB, public policy to protect human subjects and stakeholders tends to lag behind public awareness and evidence of harms to them \citep{Grady2015, stark_IRBs, belmont_report}. 
+As a result, society relies upon professional norms for responsible development and deployment and the establishment of best practices.  
+
+Norms exist on a continuum between \textit{recommendation} and \textit{requirement}. 
+As a nascent technology, the norms for responsible foundation model development and deployment are not yet well established at either strength of recommendation \citep{lawfare_norms}. 
+In what follows we will discuss norms for deployed models, as models for research have a wider latitude.
+
+Those who wish developers of foundation models to adopt certain norms might lead by example, allowing their own conduct and statements to \textit{recommend} the norm. 
+As discussed in  \refsec{ecosystem}, we believe that universities and other nonprofit institutions have an important role in modeling norms for foundation models. 
+As educational institutions, universities are in the unique position to encourage the next generation of theorists and practitioners to consider the issues raised in this report and also to foster interdisciplinary conversation between researchers and students~\citep{rogers2021}. 
+Universities and colleges may also contribute to the establishment of norms by auditing existing foundation models and publishing their findings, instituting ethics review boards \citep{bernstein_esr_2021}, and developing their own foundation models. 
+
+To create and adopt norms will require institutionalization in funding structures, model repository, release practices, conference submission, and grant proposal requirements.\footnote{For helpful discussion of partial compliance with ``non-compulsory fairness-conscious policy'' such as the norms under discussion here, see \citet{Dai2021}.}  
+For example, HuggingFace’s interface currently encourages the posting of data and model cards, including discussions of bias and social impact.\footnote{\url{https://huggingface.co/docs/datasets/master/}} 
+Since it is not required, and perhaps since data quality work is undervalued relative to its importance \citep{sambasivan2021everyone}, few are filled out. 
+Bias and social impact are included in ethics statements for conferences and some forms of standard evaluation (as discussed in \refsec{evaluation}), but otherwise treated as optional considerations by some researchers. This must change.
+
+For some socially consequential use cases, we recommend legal standards be established that \textit{require} adapted derivatives to provably exhibit certain properties (\refsec{legality}).
+Domains of special concern should be democratically decided but are likely to include allocating and distributing government services, medical diagnosis and monitoring, hiring, and lending: 
+all contexts in which opportunities or even lives of people rest on the proper functioning of an adapted derivative. 
+
+What norms should we promote, institutionalize, or require? 
+We recommend a few here, but aim primarily to encourage dialogue about appropriate norms for the development and use of foundation models. 
+Prior work has often focused on norms that advocate documentation \citep{gebru2018datasheets, bender2018data, Mitchell_2019, dodge2019work}. 
+Because many of the negative social consequences that appear in a downstream context may initially appear to be \textit{extrinsic} or particular to a use case (\refsec{fairness}), documentation and transparency are especially important for foundation models. 
+Currently, those who adapt foundation models that document the biases or other negative features of their adapted derivatives have no automatic mechanism to report their findings to the developers of the foundation model.  Compiling multiple reports of related problems in adapted derivatives may allow the model development team to discover an \textit{intrinsic} property of the model that spans multiple use cases. 
+Because creators of adapted derivatives often represent different entities than from foundation model developers or providers, additional reporting structures and norms or regulation would be needed for this type of feedback to reach foundation model developers. 
+Such feedback could also be made available to the general audience of model auditors, thereby making auditing and pursuing recourse more accessible.
+ 
+Public commitment to norms, standards, and creation of reporting mechanisms could also allow downstream users to submit feedback to foundation model providers.
+In order to enable this, adapted derivatives should be consistently labeled in a way that allows impacted parties to trace problems to their source. 
+Significant technical and social barriers may impede this tracing in practice, such as privacy considerations and the proprietary nature of many foundation models, but without labeling it would be impossible.  
+
+It is important that model developers and providers create mechanisms for such reporting.  Reporting mechanisms could be informed by similar structures on current platforms, such as issue tracking on open source projects on GitHub. In particular, the submitted issues should be public so that other users can identify trends even if changes have not yet been made and so that developers and providers can be held accountable for unaddressed issues. Additional mechanisms are needed to escalate trends upwards to foundation model providers. 
+Similar suggestions regarding tracking issues in training data are discussed in \citet{dinan21} and \refsec{data}.
+
+\citet{holland2018dataset} suggest 
+the nutrition label as a helpful model, drawing from labeling discussions in consumer privacy \citep{kelley2009nutrition}.  A nutrition label includes both a list of the ``raw’’ ingredients and the full nutritional information of the processed food. So too a model card \citep{Mitchell_2019} or nutrition label for an adapted derivative could include both a list of the ``raw materials’’ such as training data and foundation models used, and the full ``nutritional content'' of the adapted derivative such as its known capacities, weaknesses, and biases.  
+
+Reporting of the full pipeline is necessary in order for data subjects and impacted parties to trace harms to their sources. However, without the ability to \textit{attribute responsibility} for the harm to either the adapted derivative, the foundation model, or both, and without a framework for recourse once harm has been attributed, even a successful tracing of a harm will be unlikely to lead to changes in the model (see also \refsec{fairness-recourse}). Thus, significant technical, policy, and legal work is needed in order to develop frameworks for communicating data, model, and derivative contents to other experts and eventually to the public; to attribute responsibility for harms; and to create avenues for recourse. 
+
+\subsubsection{Release and Auditing}
+
+In February 2019, OpenAI embarked on an experiment.  By releasing a reduced 124M parameter GPT-2, sans datasets, they hoped to buy time: time to test for bias, time to prepare for misuse, and time for society to adapt to the presence of large language models \citep{solaiman_release_2019}. Eight months later, when OpenAI released the full $\sim$1.5 billion parameter version, testing had exposed some but by no means all of the model’s capabilities and limitations. 
+When considering similar questions today, the possible harms of release, centering primarily on misuse (\refsec{misuse}),\footnote{For analysis of harms related to misuse, see \citep{Rini2017-fakenews} on fake news and \citep{Rini2020deepfakes} on deepfakes.} must be weighed against the benefit of transparency that no closed-door testing can replicate, namely broader and independent auditing and access.  
+
+\paragraph{Auditing}  
+Auditors probe the limitations of current models and suggest paths to fixing them, as well as testing the model's adapted derivatives in a wide variety of natural settings. 
+A policy of open access for auditing allows more numerous and diverse researchers to investigate any model’s biases, limitations, and security vulnerabilities, better informing acceptable uses of the models and calibrating \textit{appropriate trust} in them \citep{Danks2019, Baier1986}.\footnote{Calibrating trust may require an explanation capable of illuminating features of the model relevant to trust, such as ``discriminatory use of a sensitive feature'' \citep{dimanov2020you}.}  In order to support independent audits of foundation models, model developers or third-party intermediaries could host open API access for auditors, including gradient access, and allow access to training data \citep{raji2019, Raji2020}. 
+
+Foundation models trained on proprietary data in industry are unlikely to be released, and those trained on private data (as in a medical context) should not be. In order for proprietary models to benefit from independent audits, and for model subjects to benefit from improvements prompted by an auditing process, we recommend that audits occur during a staged release.  While staged release may not illuminate all possible model use cases, one way to broaden the range of uncovered use cases is to enlist a neutral third party to decide which individuals or organizations should receive early access in the staged-release program.
+When model developers decide who should receive staged access, they open themselves up to charges of favoritism, selective distribution, and manipulating public perception of their product. 
+A neutral “staged release board”, or federal auditors, could provide a backstop against these failure modes and ensure that a wide range of auditors and users are provided access in order to capture a range of disciplinary expertise and sectors of society. 
+A staged release board could also mitigate any perception that auditors would be at risk of losing their early access to the model if they share unflattering outputs, as they might be in a standard staged release process. 
+
+\paragraph{Access and adaptation.} 
+
+To the extent that there are social benefits to foundation models, release of models holds the potential to further distribute them. Large language models such as BERT and M-BERT are capable of cross-lingual transfer, which\dash{}when the models are open-sourced\dash{}may allow for adaptation to languages which otherwise would have too few texts available \citep{wu-dredze-2019-beto, wang_extending_2020}. 
+Given the number of languages not currently well served by commercial providers, such a benefit alone could be substantial.   
+
+Release is not sufficient to democratize access to foundation models, as the barrier of compute power still precludes many from modifying or even loading foundation models, let alone developing their own. 
+However, on each of these points we have seen significant recent technical  improvement. 
+Memory techniques such as the zero redundant optimizer (ZeRO) allow researchers to run and train very large models on a simple setup \citep{rasley2020deepspeed, rajbhandari2021zeroinfinity}.
+Techniques such as distillation could allow the release of smaller, more tractable models that recoup much of the performance of their parent model while being much easier to train \citep{li2020train}. 
+Development of less energy-intensive training methods, as discussed in \refsec{environment}, could further spread the ability to work with released models. 
+Increases in efficiency such as the co-design of hardware and software are needed to train yet larger models, as discussed in \refsec{systems}, but could also be used to lower the price of access to current models.  
+ 
+The most powerful of the harms, by contrast, are not obviously fueled by release.   
+Sophisticated or institutional actors with the capacity to embark on large-scale disinformation, cyberwarfare, or targeted phishing also are likely to have the capacity to create a similar model if none were released.  
+Although potentially significant, these harms should not therefore weight heavily on a release calculus \citep{solaiman_release_2019, shevlane_offense-defense_2020}.  
+The harms to be weighed against the benefits are those from less well-resourced actors who would not be able to create their own foundation model but may be motivated to generate spam or abuse, fake reviews, or cheat on tests.
+Does the benefit of release outweigh the potential for harm from actors sophisticated enough to use a released model or API but not sophisticated enough to create their own? We believe that the answer is yes. 
+Research teams with the resources and connections necessary to develop foundation models are few in number.  Even collectively, we are unlikely to be numerous or diverse enough to imagine all possible beneficial use cases or all possible probes that could illuminate the capability surface of a foundation model.
+
+\subsubsection{When not to build} 
+\label{sec:ethics-nottobuild}
+
+The development and deployment of powerful technologies is not like gravity, an external force that acts upon us.
+Technologies reflect a set of choices made by humans; human agency shapes the technological frontier.
+It follows that technologists can choose when not to build, design, or deploy foundation models \citep{zimmermann_stop_2021}. 
+This decision need not be binary; instead, one can refuse to engage in the default way by subverting embedded values, challenging assumptions, and shaping research agendas \citep{audra_simpson}. 
+Technical artifacts, foundation models included, are inherently political, so the research about them has a socio-political context, not solely a technical one. Developers and researchers should be cognizant of which problems they seek to address, \eg~how to scale up a foundation model versus how to make it more computationally accessible; how those problems are formulated; and who their solutions ultimately empower \citep{rogaway_moral_nodate, winner_artifacts_1980, Passi2019}. We should value research that seeks to make foundation models more interpretable, accessible, sustainable, and fair (see \refsec{interpretability}, \refsec{environment}, \refsec{fairness}). 
+
+By asking when not to build a foundation model or adapted derivative, we are implicitly asking not only ``What should we build or not build?'' but also, ``Under what conditions should a model be built?'' and ``What criteria and principles govern building?'' The first question stems from the model view; the following questions from the ecosystem view (\refsec{introduction}).
+
+An invitation to consider refusing to build is not tantamount to saying, “Do nothing.” It is an invitation to make deliberate and judicious choices about what is worth the time, financial resources, expertise, and energy use to build, design, and deploy. Ultimately, this is a difficult, moral question rooted in context and values. 
+There are cases in which the application of adaptive derivatives (and algorithms and machine learning more generally) is inappropriate, because the community impacted protests or because the adaptive derivative naively exacerbates systemic issues that are better addressed with public policy, additional funding, or interdisciplinary collaborations \citep{COMPAS_propublica}.
+
+The Belmont Report, as applied to machine learning in \citet{Floridi2018}, provides one possible framework for this question. Drawing from the principle of "beneficence" \citep{belmont_report}, we can identify cases to reconsider building when an adaptive derivative or a research avenue might cause more harm than good or even provide no benefit at all. Alternatively, there may be cases in which an adaptive derivative is better at a task on a metric of efficiency, performance, and generalization, values prioritized in the machine learning community \citep{birhane2020}, but an individual, community, or organization might choose to prioritize an existing solution that highlights other values such as human connection and  interpretability \citep{benjamin_ruha_bioethics}.\footnote{See also \refsec{interpretability-impacts} for relevant discussion of impacts of uninterpretability.} In doing so, they exercise their autonomy\dash{}as explained in the Belmont Report's "respect for persons"\dash{}in deciding that this is not an appropriate context in which to build \citep{belmont_report}. 
+
+Answering the question of when not to build is a matter of individual responsibility as well as a broader professional responsibility. 
+The decision not to build something by one person, or one team, or one company, invites the reply, “But if we don’t build this, someone else will, and they may likely do it worse.”  
+A simple utilitarian weighing of comparative harms of the outcomes of the two models misses the importance of integrity. 
+It matters very much whether \textit{we} are the ones building the bad model or whether someone else is \citep{Williams1973}.
+Individuals have reasons not to build something that goes against their values or that they cannot endorse as right to build \citep{Korsgaard2009}. However, the structural environment so created is different. If even one company decides to build the most effective version of an ethically-dubious model, they open the door for other companies to consider similar avenues of research; they make it competitively disadvantageous not to pursue the research \citep{askell_role_2019}. 
+When not to build is then a collective question as much as it is an individual one, requiring the community to adhere to codes of professional ethics and responsibility. 
+
+In the AI/ML community this infrastructure is underdeveloped compared to other fields such as the medical field. Although professional bodies like the Association for Computing Machinery (ACM) have ethics statements, both industry and academia lack widely used and accepted professional oaths (\eg the Hippocratic Oath or the the Obligation of the Engineer), regulatory bodies involved in deployment and research (\eg the FDA for drugs), and official protocols for ethics review (\eg the IRB for research involving human subjects; \citep{bernstein_esr_2021}). 
+The ability to opt-out can be incorporated into the foundation model ecosystem at many stages, including during data production, adaptation, and deployment. As the norm veers towards collecting larger and larger swaths of training data (\refsec{data}), we should endeavor to maintain a "respect for persons," \citep{belmont_report} emphasizing privacy and consent as part of the data life cycle. 
+This would require innovation in data management and a more concrete understanding\dash{}technically and philosophically\dash{}of informed consent online, ways of documenting and ensuring that consent is respected, and privacy (see \refsec{data} for a specific data management proposal; \citep{changingtherules_ohm}). 
+Although data and foundation models are diverse in their applications, data participants should be able to indicate how they do not want to have their data used. An opt-out consent model favors developers, as it does not require them to to get consent for each new, unexpected use case. Important then is the right to revoke consent given vacuously for applications that are now being pursued, but were not when consent was originally given. 
+
+\subsubsection{Conclusion} In this section, we have surveyed some of the risks to society that accompany the widespread adoption of foundation models, such as the homogenization of outcomes and centralization of power. Developers of foundation models should adopt norms regarding development, auditing, and release of foundation models in order to address these risks, aided by legislative requirements, and individuals should be able refuse to be data or decision subjects of foundations models without repercussion.
+
+Many implications of foundation models' generative and interactive capacities remain unsurveyed here.  
+For example, \refsec{economics} discusses the potential gains to economic productivity from the automation of creative and design work.  
+However, in virtue of their generative nature, foundation models may replace work that many people find meaningful and fulfilling, such as graphic design and writing. 
+We hope that the scope of this report will aid others in their pursuit of the questions of ethics and society unaddressed here. 

@@ -1,0 +1,87 @@
+\documentclass[screen, authorversion, acmsmall]{acmart}
+\citestyle{acmauthoryear}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{xcolor}
+\usepackage{ifthen}
+\usepackage[normalem]{ulem}
+\usepackage{svg}
+\usepackage{subfiles}
+\usepackage{xspace}
+\usepackage{cleveref}
+\usepackage{wrapfig}
+\usepackage{dialogue}
+\usepackage[most]{tcolorbox}
+
+
+\input std-macros
+\input macros
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{authblk}
+\renewcommand\Authsep{\hskip1em\relax}  % separation between authors
+\renewcommand\Authands{\hskip1em\relax} % separation before last author
+
+\makeatletter         
+\renewcommand\maketitle{
+{\raggedright 
+\begin{center}
+{\Huge \bfseries \sffamily \@title }\\[2ex]
+{\@author}\\[2ex] 
+\end{center}}}
+\makeatother
+
+\renewenvironment{abstract}{%
+    \newline
+    \itshape
+    }
+{}
+% end hack
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\title{On the Opportunities and Risks of Foundation Models}
+\input authors
+\affil{Center for Research on Foundation Models (CRFM) \\ Stanford Institute for Human-Centered Artificial Intelligence (HAI) \\ Stanford University}
+
+\renewcommand{\shortauthors}{Center for Research on Foundation Models (CRFM)}
+
+\maketitle
+% Need this hack for compilation to work
+\noindent %Version: 3.0 (August 12, 2021)
+\vspace{-0.2in}
+%\medskip
+\input abstract
+
+\clearpage
+\tableofcontents
+\clearpage
+
+\input introduction
+\clearpage
+\input capabilities
+\clearpage
+\input applications
+\clearpage
+\input technology
+\clearpage
+\input society
+\clearpage
+\input conclusion
+\input acknowledgements
+
+\bibliography{main_without_refdb,refdb/all}
+
+% ACM reference style
+\bibliographystyle{ACM-Reference-Format}
+
+% For alphabetical reference order
+% \bibliographystyle{plainnat}
+
+% For appearance reference order
+% \bibliographystyle{unsrtnat}
+
+\end{document}

@@ -1,0 +1,134 @@
+\newsection
+\subsection{Evaluation}
+\label{sec:evaluation}
+\sectionauthors{Rishi Bommasani, Kawin Ethayarajh, Omar Khattab}
+
+\subsubsection{Introduction}
+\label{sec:evaluation-introduction}
+Evaluation gives context to machine learning models: it serves as a means for (1) tracking \textit{progress}\dash{}how do we we measure the performance of models and how do we design improved models (\refsec{modeling}); (2) \textit{understanding}\dash{}what behaviors do models exhibit (\refsec{interpretability}) and how do they perform on different slices of data (\refsec{robustness}); and (3) \textit{documentation}\dash{}how do we efficiently summarize model behavior and communicate this to diverse stakeholders. 
+For foundation models, each of these purposes for evaluation are critical but the nature of foundation models introduces new challenges that are not generally encountered in other AI or ML settings: 
+\begin{enumerate}
+    \item Tracking progress requires relative comparison, but comparing foundation models is complicated by the fact that foundation models must be adapted (potentially in different ways) to perform tasks.
+    \item Understanding requires specified in-advance knowledge (\eg~taxonomies) of what is being evaluated for, but foundation models acquire emergent skills (\eg~in-context learning) that will be difficult to anticipate in designing evaluations.
+    \item Documentation requires clear desiderata to meaningfully inform decision-making, but foundation models can be adapted for myriad applications, which makes comprehensive documentation challenging.
+\end{enumerate}
+To orient the discussion of evaluating foundation models, we distinguish two classes of evaluation that arise from the abstraction of foundation models: \textit{intrinsic} evaluation of the foundation model, which is inherently divorced from a specific task due to the task-agnosticity of these models, and \textit{extrinsic} evaluation of task-specific models, which is necessarily dependent on both the foundation model and the adaptation mechanism.
+Further, we recognize that due to the anticipated impact and scope of foundation models, a variety of stakeholders (\eg~foundation model providers and application developers, auditors and policymakers, practitioners and researchers) will require evaluation of both foundation models and task-specific derivatives, with these evaluations serving different purposes and involving different desiderata based on the stakeholder. 
+With this in mind, standard paradigms for the evaluation of machine learning models are not designed explicitly for the setting of foundation models.
+Therefore, we emphasize intrinsic evaluation (\refsec{evaluation-intrinsic}), the importance of adaptation in extrinsic evaluation (\refsec{evaluation-adaptation}), and evaluation design (\refsec{evaluation-design}) as clear steps towards an evaluation framework that is better suited to foundation models.
+This discussion contributes to broader dialogue surrounding the role of evaluation of machine learning systems \citep[][\textit{inter alia}]{galliers1993, lipton2019, ribeiro2020beyond, linzen2020, kiela2021dynabench, milli2021, jacobs2021, bowman2021, dehgani2021, ma2021} and, given the complexities of evaluation, may benefit from drawing upon theories of measurement and evaluation that exist beyond machine learning \citep{messick1987, jackman2008, loevinger1957, messick1988, hand2010, brewer2014}.   
+
+\subsubsection{Intrinsic evaluation}
+\label{sec:evaluation-intrinsic}
+
+Evaluation of machine learning systems has traditionally been grounded in \textit{tasks}, often ones that are envisioned as functions specifically useful for applications (\eg~translation, object recognition).
+In contrast, since foundation models are intermediary assets that must be further adapted or specialized to perform useful tasks, the standard evaluation paradigm must be altered to facilitate the direct understanding and comparison of foundation models.
+
+One approach is to evaluate foundation models in terms of the task associated with the training objective.
+For example, a language model like GPT-3, which was trained by predicting the next word given the preceding context, may be evaluated based on the probabilities it assigns words given their preceding context in held-out test data (\ie~perplexity on language modelling benchmarks like LAMBADA \citep{paperno2016lambada}).
+This approach has shown promise in NLP thus far, but we identify two fundamental limitations it exhibits.
+First, relying on the training objective for evaluation lacks generality: foundation models trained using different incompatible objectives cannot be readily compared or understood in a consistent frame.
+Second, evaluation in this way relies upon a \textit{proxy} relationship to be meaningful, \ie~measurements in terms of the training objective should correlate with other more meaningful and intelligible quantities (\eg~the quality of content generated via a foundation model).
+While this proxy relationship has proven to be robust in the past in some contexts, it likely will break down when assessing more diverse capabilities of foundation models, their behavior in more diverse environments or domains, and considerations beyond in-domain accuracy (we discuss this more extensively in \refsec{evaluation-design}).
+In light of these limitations, we anticipate that two approaches will need to be considered, offering complementary benefits.
+
+\paragraph{Imputing intrinsic evaluation from broad extrinsic evaluation.}
+One route towards evaluating foundation models is to adapt them to a wide range of tasks and measure the performance of the resulting task-specific models.
+As the foundation model is the shared basis across all of these models, the performance in aggregate reflects on the nature, and quality, of this shared basis.
+At present, many subareas of AI have begun to construct \textit{meta-benchmarks}, \ie~a single evaluation that consolidates individual evaluations across a number of different tasks or domains \citep{wang2019glue, wang2019superglue, hu2020xtreme, santurkar2020breeds, gehrmann-etal-2021-gem, hendrycks2021measuring, koh2021wilds, Tamkin2021DABS}.
+Given the growing adoption of this paradigm and its established strengths, here we note why it is likely insufficient to fully satisfy the goals of evaluations with respect to foundation models.
+Meta-benchmark evaluation requires adaptation (minimally to specialize the foundation model to each of the tasks in the meta-benchmark), which makes reasoning about the foundation model itself challenging given the addition process (\ie~adaptation) involved. 
+Specifically, this complicates matters of progress, both in terms of tracking (\eg~is performance attributable to potent foundation models or well-designed adaption practices) and in terms of identifying improvements in the process used to learn foundation models (\eg~fundamental improvements in data selection (\refsec{data}), training objectives (\refsec{training}), and model architectures (\refsec{modeling}) may be difficult to identify by comparing the performance on a meta-benchmark between two foundation models).
+In addition, this evaluation paradigm makes it difficult to understand or document properties and capabilities specific to the foundation model, which may make it unwieldy to convey to certain stakeholders (\eg SuperGLUE performance may not be sufficiently informative, or may be misleading, for policymakers) or use as grounds for anticipating their behavior for new tasks or domains.  
+
+\paragraph{Direct evaluation of intrinsic properties.}
+To complement the use of meta-benchmarks, we also argue for why measuring the properties (\eg~specific capabilities or biases) of foundations models directly is valuable, divorced from specific tasks.\footnote{Strictly speaking, these direct evaluations may still involve formulation as a task and foundation model specialization to perform the task, but the objective is more akin to probing (see \refsec{interpretability}) of trying to measure the foundation model as directly as possible.}
+For example, we may endeavor to directly measure the linguistic capabilities of foundation models to identify syntactically valid and invalid sentences.
+To motivate the value of this approach, we return to the purposes for evaluation.
+Notably, articulating the presence and intensity of capabilities, skills, and biases identifies concrete areas for improvement (progress), elucidates the current potential (understanding), and expresses relevant aspects efficiently (documentation).
+Such an approach also is in service of broadly comprehensible evaluation, \ie~evaluation that can be understood by both technical experts, non-technical experts (\eg~policymakers or social scientists) and the general purpose.
+For example, characterizing the persuasive or rhetorical capabilities of these models may especially intuitive for internalizing their potential for disinformation and misuse (\refsec{misuse}) \citep{BuchananCSET2021}.
+
+Direct evaluation of properties also serves as an important pathway towards better handling of the emergent properties of foundation models; to demonstrate this, we take in-context learning as a case study.
+In particular, \citet{brown2020gpt3} not only demonstrated GPT-3's signature capability of robust in-context learning, but also were the first to specifically identify in-context learning as a specific way to adapt and interact with models (through their exploration of GPT-3).
+Traditional task-based extrinsic evaluation does not provide a clear means by which in-context learning could have been identified; directly interacting with the foundation model appears to be necessary in this case.
+More generally, while it appears inevitable that many unanticipated phenomena like in-context learning will be recognized through the unstructured or loosely structured exploration of these models and their capabilities, we believe new approaches to evaluation should be sought out that structure this exploration or, more ambitiously, suggest new properties that can then be more rigorously tested for.
+Intrinsic evaluation may also lower the threshold for demonstrating the potential of foundation models; new approaches for foundation models may be sufficiently promising if they demonstrate improvements in intrinsic evaluation, even if they are not immediately accompanied by corresponding well-suited adaptation methods for eliciting these capabilities in extrinsic evaluation.
+
+There is a significant open question of how intrinsic evaluation should be implemented; the mechanics of such evaluation are unclear.
+We enumerate a few general principles and considerations that may help inform the design and execution of intrinsic evaluation.
+\begin{enumerate}
+    \item \textit{Inspiration from evaluation of humans.} 
+    Many of the relevant properties, capabilities, and biases we are interested in for foundation models are also of interest for humans, which suggests that methods for measuring these properties in humans may prove to be instructive, or even directly translatable, for evaluating foundation models. 
+    For example, psycholinguistic measures of human linguistic competencies can be modified to evaluate foundation model linguistic competencies \citep{levy2008, frank2013, linzen2016assessing, ettinger2016, marvin2018, van-schijndel2018, futrell2019, prasad2019, ettinger2020} or psychological measures of human social biases can be modified to evaluate foundation model social biases \citep{greenwald1998, caliskan2017, may2019, guo2020}.
+    \item \textit{Human-in-the-loop evaluation.}
+    Human-in-the-loop evaluation may prove to be critical to provide a more exploratory means for understanding foundation models, including assessing their generative or interactive capabilities.
+    In particular, human interaction with foundation models directly may better identify their emergent capabilities and limitations and direct auditing of foundation models \citep[\eg][\refsec{ethics}]{raji2019} may advances goals for documentation and transparency.
+    \item \textit{Validity of intrinsic measures.}
+    While intrinsic measures allow for direct measurement at the source, \ie measurement and evaluation of the properties of a foundation model independent of adaptation and specific tasks, they pose challenges for building trust in the validity \cite{messick1987, messick1988} of the evaluation. 
+    In particular, extrinsic evaluation outcomes may also be important in validating intrinsic measure design, \eg the \textit{predictive validity} of intrinsic measures (\ie their ability to (statistically) predicted related downstream outcomes) may prove to be a central criterion. 
+\end{enumerate}
+
+\subsubsection{Extrinsic evaluation and adaptation}
+\label{sec:evaluation-adaptation}
+
+Evaluating task-specific models has historically involved reporting the performance (generally meaning the accuracy) of the model on a specific held-out test set.
+While this paradigm may partially suffice to understand or document a model, it often amounts to unfair comparisons between task-specific models produced with different (and, potentially, unequal) resources, making it difficult to gauge how much progress has been made.
+The concern of unfair comparisons is exacerbated in the foundation model regime: different foundation models (\eg~BERT and GPT-3) may form the foundation for different task-specific models, and these foundation models may involve vastly different amounts of training data and computation.
+
+To account for the resources required to achieve specific levels of performance, \citet{linzen2020} argues that (pre)\textit{training resources} should be acknowledged and tracked in evaluation. 
+We believe this is a scientifically principled proposal; comparing different approaches for training foundation models without accounting for training resources is likely to be misleading.
+However, given that the process for creating foundation models is especially expensive (\eg~requiring significant human and financial capital), and often governed by societal factors (\eg~commercial incentives) in addition to scientific factors, it may be the case that the foundation models in practice will vary greatly in the training resources afforded, making controlled comparison difficult.
+Here, we consider an alternative, which may be more pervasively viable, to partially account for the resources involved to complement the proposal of \citet{linzen2020}.
+In particular, we consider why extrinsic evaluation should acknowledge \textit{adaptation resources}, which is critical for ensuring that extrinsic evaluation is able to identify the most performant adaptation methods (which intrinsic evaluation, fundamentally, cannot do). 
+We draw attention to the fact that adaptation resources often are construed as the data used to adapt models, but additional resources \citep[\eg data used to choose adaptation methods;][]{perez2021true} and constraints (\eg the level of access required to adapt the foundation model; see \refsec{adaptation} and \refsec{ethics} for further discussion) should also be accounted for.
+
+\paragraph{Accounting for adaptation resources.}
+Accounting for the resources expended to adapt foundation models for specific tasks requires a complete understanding of what resources or constraints are used for different adaptation methods, \ie~evaluations that endeavor to account for these resources must evolve alongside developments in what resources are used in adaptation (\refsec{adaptation}).
+In existing task-specific evaluations, most evaluations specify the amount of data that can be used to adapt a (foundation) model to the task. 
+However, \citet{perez2021true} identify a key nuance here that has been discounted in past work, in that this should encapsulate all data used to inform adaptation, \ie~both the data used to adapt the foundation model and the data used to choose the adaptation method.
+Further, in the foundation model regime, the notion of \textit{access requirements} for different adaptation methods is also a new consideration that should be factored into evaluation.
+Concretely, some adaptation methods may generally outperform others but may require greater ability to access or modify the foundation model compared to others (\eg~fine-tuning requires foundation model gradients to modify a foundation model, whereas prompting may only require blackbox access in specifying inputs). 
+
+Accounting for the resources involved in adaptation enriches what conclusions can be reasonably drawn from evaluation of task-specific models.
+At present, task-specific evaluation may provide sufficient clarity for certain types of understanding or documentation of particular task-specific \textit{artifacts} (\ie~the exact models being evaluated) but do not provide clear signal for how different adaptation methods perform and how to select a specific adaptation method in a given context.
+In contrast, by accounting for the resources and access requirements involved in adaptation, evaluation better enables research to identify which adaptation methods or \textit{processes} make best use of the resources provided, \ie~signal is offered not just for the specific artifacts being evaluated but the more general processes by which they were derived.
+The proposed evaluation protocol, therefore, clearly works towards identifying which adaptation methods should be used; we note that all of these conclusions should always be taken as specific to a given foundation model, as evaluation in this form does not provide sufficient evidence to conclude an adaptation method is uniformly the best across foundation models.\footnote{Current results, instead, suggest that different adaptation methods are better-suited to different types of foundation models and training objectives \citep{liu2021prompt,lester2021power}.}
+
+\subsubsection{Evaluation design}
+\label{sec:evaluation-design}
+
+In theory, the goal of evaluation is to measure and characterize various theoretical constructs (\eg~accuracy, robustness (\refsec{robustness}), fairness (\refsec{fairness}), efficiency (\refsec{systems}), environmental impact (\refsec{environment})) in service of various purposes (\ie~progress, understanding, documentation).
+However, in practice, the utility of evaluation will be determined by how evaluations are designed and executed.
+For example, automated measurements of the generative capabilities of foundation models (\eg~their factual correctness) may poorly capture the nature of these qualities and, instead, human-in-the-loop evaluation may better contextualize these capabilities. 
+
+In considering the evaluation design we envision for foundation models and their adapted derivatives, we begin with the mechanics of evaluation.
+Traditionally, the evaluation of machine learning models has involved a large training set that is used to learn the model, an optional validation set that is used to set hyperparameters, and a test set to evaluate the generalization of the learned model to held-out data \citep{bishop2006}.
+As a result, creating benchmarks to evaluate models has historically required large amounts of data, most of which is allocated towards training, which complicates the design of certain diagnostic or nuanced evaluations when data is scarce or expensive to attain \citep{rogers2020, rogers2021}. 
+In contrast, because the benefits of foundation models will often coincide with the sample efficiency of adaptation (\ie~few-shot or zero-shot capabilities) and the diversity of possible applications, we instead envision a regime where benchmarks for individual tasks are much smaller (since far less data needs to be provided as ``training", \ie~adaptation, data) and are far more diverse (both to capture various capabilities in intrinsic evaluation and more strongly ground evaluation in ecologically valid ways \citep{brofenbrenner1977, vries2020} during extrinsic evaluation).
+This suggests that the nature of foundation models may cause a shift in nature of benchmarks (and the mentality of those constructing benchmarks), de-emphasizing quantity as a key priority in benchmarks as opposed to quality and diversity.
+The NLP community has begun to see the beginnings of such a regime with expansive and diverse benchmarks like BIG-Bench\footnote{\url{https://github.com/google/BIG-bench}} and FLEX \citep{bragg2021}; this paradigm lowers the barrier for benchmark design, thereby enabling the broader community to partake in evaluation design.\footnote{Traditionally, the design of benchmarks like ImageNet \citep{deng2009imagenet} and SQuAD \citep{rajpurkar2016squad} has been conducted by high-resourced research labs that can afford to pay for the creation of these datasets through crowdsourcing \citep{rogers2020}.} 
+
+Alongside the mechanics of evaluation, the presentation of and interface to the evaluation results informs how these results will be used inform decision-making (\eg~new modelling approaches, model selection, auditing). 
+Leaderboards have become the de facto paradigm in machine learning, whereby models are ranked by a specific and singular criterion (generally a form of accuracy).
+This approach has generally led to significant and rapid progress in system quality over time \citep[\eg][]{wang2019superglue}, but significant concerns have been raised of whether this yields more general improvements \citep[\eg][]{linzen2020, bowman2021}.\footnote{We note the connection to Strathern's Law \citep{strathern1997} (sometimes referred to as Goodhart's Law \citep{goodhart1984}): ``When a measure becomes a target, it ceases to be a good measure."}
+As is true for all machine learning models, it is rarely the case that the desiderata for foundation models and their derivatives will be singular; instead, we anticipate the breadth of their application and societal impact necessitates heightened consideration of criteria beyond accuracy (\eg~robustness, fairness, efficiency and environmental impact).
+To this end, we note that evaluation of foundation models should report measurements across these diverse fronts; existing benchmarks are increasingly designed to reflect more than just accuracy (\eg~robustness \citep{koh2021wilds, goel2021robustnessgym}, fairness \citep{stereoset, nangia2020}, efficiency and environmental impact \citep{coleman2017dawnbench}).
+Further, we note that if the reporting of performance across this different categories is done in the form of a leaderboard, mechanisms to disambiguate potential trade-offs (to induce a ranking) will be especially necessary \citep{ethayarajh2020}.
+In particular, since different stakeholders will have different preferences (\eg~the weight they ascribe to different properties) and values \citep{birhane2020}, leaderboard design should allow stakeholders to interact and manipulate how the ranking is done to align with their values; \citet{ma2021} presents an early attempt to enable this by comparing the utility of models using an economic framing based on a user's specified utility function. 
+
+\subsubsection{Takeaways}
+\label{sec:evaluation-takeaways}
+Evaluation performs several roles (\ie~progress, understanding, documentation) that are vital for all machine learning paradigms, including the foundation model paradigm.
+Foundation models introduce new challenges for existing evaluation frameworks; designing evaluations that directly target the foundation model regime will better serve not only the multiple purposes of evaluation, but also the myriad of stakeholders involved.
+\begin{enumerate}
+    \item 
+    While machine learning evaluation traditionally has considered task-specific models, evaluating foundation models involves engaging with the fact that these models are not specific to a task. 
+    Evaluation of these models likely will involve integrating two complementary approaches: (a) imputing the properties of foundation models from broad evaluation of task-specific derivatives and (b) direct measurement of these properties in foundation models.  
+    \item
+    Existing evaluation frameworks often do not account for the resources required to create the models being evaluated, leading to \textit{unfair comparisons}.
+    For foundation models, we discuss an evaluation paradigm that emphasizes accounting for \textit{adaptation resources} (\eg~all data used in adaptation, access requirements for the foundation model), which appears to lead to more informative evaluations that better shape how adaptation is conducted.
+    \item 
+    Existing evaluation design often is limited in the diversity of metrics considered and requires large adaptation datasets.
+    For foundation models, we echo growing calls for evaluation to consider a broader range of desiderata (\eg~robustness, fairness, efficiency, environmental impact) to capture the wide range of stakeholder values/preferences, as well highlight how the sample efficiency of adapting adaption models may allow for more diverse evaluations by re-allocating resources involved in designing evaluations.
+\end{enumerate}

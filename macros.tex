@@ -1,0 +1,128 @@
+% Macros for general
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand\newsection{\clearpage}
+\newcommand\sectionauthors[1]{\emph{Authors: #1}\vspace{1em}}
+
+% Stylistic Macros
+\newcommand\eg{e.g.,~}
+\newcommand\ie{i.e.,~}
+\newcommand\dash{~---~}
+
+% Poor man's version control which allows us to easily extract a stable snapshot.
+% 1: stable branch, 0: latest branch
+\def\stable{1}
+
+% You can use this macro to keep two versions of a text around:
+%   \stableLatest{old text that's stable}{new text that's not stable but you want to see by default}
+\if\stable1
+  \newcommand\stableLatest[2]{#1} % Stable
+\else
+  \newcommand\stableLatest[2]{#2} % Latest
+\fi
+
+% Macros for adding comments
+
+\if\stable1
+  \newcommand\todo[1]{}
+  \newcommand\todocite[0]{}
+  \newcommand\todocitesilent[0]{}
+  \newcommand\status[1]{}
+  \newcommand\defend[1]{}
+\else
+  \newcommand\todo[1]{\textcolor{red}{[TODO: #1]}}
+  \newcommand\todocite[0]{\textcolor{gray}{[CITE]}\xspace}
+  \newcommand\todocitesilent[0]{}
+  \newcommand\status[1]{\textcolor{gray}{\bf [Status: #1]}}
+  \newcommand\defend[1]{\textcolor{magenta}{[Cite: #1]}}
+\fi
+
+\if\stable1
+
+\newcommand\pl[1]{}
+\newcommand\rb[1]{}
+\newcommand\ilevent[1]{}
+\newcommand\mx[1]{}
+\newcommand\FT[1]{}
+\newcommand\tnote[1]{}
+\newcommand\dor[1]{}
+\newcommand\pw[1]{}
+\newcommand\at[1]{}
+\newcommand\dora[1]{}
+
+\else
+
+% Doesn't work - how do you quote #1?
+% \newcommand{\commenter}[3]{%
+%  \expandafter\newcommand\csname #1\endcsname{\textcolor{#2}{[#3: \#1]}}%
+% }
+%\commenter{pl}{purple}{Percy}
+
+\newcommand\pl[1]{\textcolor{purple}{[Percy: #1]}}
+\newcommand\rb[1]{\textcolor{magenta}{[Rishi: #1]}}
+\newcommand\ip[1]{\textcolor{orange}{[Isabel: #1]}}
+\newcommand\sidd[1]{\textcolor{blue}{[Sidd: #1]}}
+\newcommand\fr[1]{\textcolor{brown}{[Frieda: #1]}}
+\newcommand\tianyi[1]{\textcolor{blue}{[Tianyi: #1]}}
+
+\newcommand\aditi[1]{\textcolor{blue}{[Aditi: #1]}}
+\newcommand{\tnote}[1]{{\color{blue}{[TM: #1]}}}
+
+\definecolor{CMpurple}{rgb}{0.6,0.18,0.64}
+\definecolor{atcolor}{rgb}{0.83,0.28,0.06}
+\definecolor{ballblue}{rgb}{0.13, 0.67, 0.8}
+\newcommand\cm[1]{\textcolor{CMpurple}{\textsf{CM\@: #1}}}
+\newcommand\cmm[1]{\marginpar{\raggedright\tiny\textcolor{CMpurple}{\textsf{{\bfseries CM\@:} #1}}}}
+\newcommand\cmi[1]{\textcolor{CMpurple}{#1}}
+\newcommand\cms{\bgroup\markoverwith{\textcolor{CMpurple}{\rule[.4ex]{2pt}{0.8pt}}}\ULon}
+
+\definecolor{stanford}{rgb}{0.54,0.08,0.08}
+\newcommand\aw[1]{\textcolor{stanford}{[AlexW: #1]}}
+\newcommand\rt[1]{\textcolor{blue}{[Rohan: #1]}}
+\newcommand\shiori[1]{\textcolor{cyan}{[Shiori: #1]}}
+\newcommand\hr[1]{\textcolor{magenta}{[Hongyu: #1]}}
+\newcommand\mx[1]{\textcolor{orange}{[Michael: #1]}}
+\newcommand\dc[1]{\textcolor{orange}{[Dallas: #1]}}
+\newcommand\dcmargin[1]{\marginpar{\raggedright\tiny\textcolor{orange}{\textsf{{\bfseries DC\@:} #1}}}}
+
+\definecolor{mypurple}{rgb}{0.8, 0.18, 1}
+\newcommand\dor[1]{\textcolor{mypurple}{[Dor: #1]}}
+\newcommand\bln[1]{\textcolor{blue}{[Ben: #1]}}
+\newcommand\pw[1]{\textcolor{CMpurple}{[PW: #1]}}
+\newcommand\at[1]{\textcolor{atcolor}{[AT: #1]}}
+\newcommand\thc[1]{\textcolor{blue}{[Tatsu: #1]}}
+\newcommand\mina[1]{\textcolor{blue}{[Mina: #1]}}
+\newcommand\chrisd[1]{\textcolor{blue}{[ChrisD: #1]}}
+\newcommand\shyamal[1]{\textcolor{blue}{[Shyamal: #1]}}
+\newcommand\jurafsky[1]{\textcolor{blue}{[Jurafsky: #1]}}
+\newcommand\jiaxuan[1]{\textcolor{blue}{[Jiaxuan: #1]}}
+\newcommand\nc[1]{\textcolor{ballblue}{[Niladri: #1]}}
+\newcommand\FT[1]{\textcolor{blue}{[Florian: #1]}}
+\newcommand\simran[1]{\textcolor{blue}{[Simran: #1]}}
+\newcommand\jh[1]{\textcolor{purple}{[JohnH: #1]}}
+\newcommand{\krandi}[1]{\textcolor{purple}{[Karan: #1}}
+\newcommand\athms[1]{\textcolor{blue}{[Armin Thomas: #1]}}
+\newcommand\lisa[1]{\textcolor{blue}{[Lisa: #1]}}
+\newcommand\keshav[1]{\textcolor{blue}{[Keshav: #1]}}
+\definecolor{tb12}{rgb}{1.0, 0.13, 0.32}
+\newcommand\rck[1]{\textcolor{tb12}{[Rohith: #1]}}
+\newcommand\dn[1]{\textcolor{tb12}{[Deepak: #1]}}
+\newcommand\dora[1]{\textcolor{olive}{[Dora: #1]}}
+\newcommand\dnm[1]{\marginpar{\raggedright\small\textcolor{tb12}{\textsf{{\bfseries Deepak\@:} #1}}}}
+\newcommand\ananya[1]{\textcolor{cyan}{[Ananya: #1]}}
+\newcommand\rckm[1]{\marginpar{\raggedright\small\textcolor{tb12}{\textsf{{\bfseries Rohith\@:} #1}}}}
+\newcommand\antoine[1]{\textcolor{blue}{[Antoine: #1]}}
+\newcommand\ar[1]{\textcolor{blue}{[Aditi: #1]}}
+
+\definecolor{eamorange}{rgb}{.8,.33,0}
+\newcommand\eam[1]{\textcolor{eamorange}{[Eric: #1]}}
+\newcommand\eamp{\textcolor{eamorange}{[Eric: +1]}}
+
+\newcommand\kcreel[1]{\textcolor{blue}{[Katie: #1]}}
+\newcommand\kcreelmargin[1]{\marginpar{\raggedright\tiny\textcolor{blue}{\textsf{{\bfseries KC\@:} #1}}}}
+
+\newcommand\ilevent[1]{\textcolor{orange}{[Isabelle L.: #1]}}
+\newcommand\michi[1]{\textcolor{purple}{[Michi: #1]}}
+\newcommand\xuechen[1]{\textcolor{blue}{[Xuechen: #1]}}
+
+\fi

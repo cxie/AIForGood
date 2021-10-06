@@ -1,0 +1,212 @@
+\subsubsection{Overview of capabilities}
+
+Foundation models possess various \emph{capabilities} that applications can draw from.
+We have chosen to discuss five potential capabilities:
+the ability to process different modalities (\eg language, vision), to affect
+the physical world (robotics), to perform reasoning, and to interact with
+humans (interaction).  Finally, we conclude with a philosophical discussion of potential limits on their capabilities.
+
+\paragraph{\hyperref[sec:language]{§\ref{sec:language}:~Language.}}
+
+NLP as a field has blazed the trail for foundation models.
+While these models dominate standard benchmarks, there is a clear gap between the capabilities these models acquire currently and those that characterize language as a complex system for human communication and thought.
+To understand this rift, we emphasize the full range of \textit{linguistic variation} (\eg~different styles, dialects, languages), which poses an opportunity and challenge given some variants are data-limited.
+Further, child \textit{language acquisition} is more sample efficient than the training of foundation models; we examine how signals beyond text and grounding may help to bridge this gap.
+Both of these characteristics of language provide clear directions for future foundation models research.
+
+\paragraph{\hyperref[sec:vision]{§\ref{sec:vision}:~Vision.}}
+Computer vision led the adoption of deep learning in AI \cite{russakovsky2015imagenet}, demonstrating that pretraining models on large-scale annotated datasets can transfer to numerous downstream settings.
+Now, pretraining on web-scale raw data instead of curated datasets, foundation models are on the rise in computer vision~\citep[\eg][]{radford2021learning}.
+These models have shown promising results for standard tasks in the field, like image classification and object detection, and training on \textit{multimodal and embodied} data beyond images may enable progress on significant challenges (\eg~3D geometric and physical understanding, commonsense reasoning).
+We also discuss some of the key challenges in modeling (\eg~the ability to scale effectively to videos) and evaluation (\eg~the measurement of higher-order capabilities) along with the applications (\eg~ambient intelligence for healthcare) and societal considerations (\eg~surveillance) that will determine the impact of foundation models for computer vision going forward.
+
+\paragraph{\hyperref[sec:robotics]{§\ref{sec:robotics}:~Robotics.}}
+
+A longstanding goal of robotics research is to develop ``generalist'' robots capable of performing myriad tasks across physically diverse environments.
+Unlike language and vision, which have led the way with foundation models both due to the abundance of raw data to train these models on and the availability of virtual applications to apply these models to, robotics faces fundamental challenges due to being anchored to the physical world.
+The principal challenge for robotics to leverage foundation models is acquiring \textit{sufficient data} of the \textit{right form} that is conducive to learning: we explore how plentiful data (\eg~generic videos of humans, amongst others) that is not specific to particular environments and across modalities (\eg~language, vision) may help to bridge this gap.
+If foundation models work well in robotic contexts, this allows for the easier \textit{specification and learning of tasks} by robotic agents, ushering in new applications (\eg~household tasks) and heightening the importance of \textit{robustness and safety} (\eg~formal safety evaluation).
+
+\paragraph{\hyperref[sec:reasoning]{§\ref{sec:reasoning}:~Reasoning and search.}}
+
+Reasoning and search problems such as theorem proving and program synthesis have been long-standing challenges in AI. The combinatorial search space renders traditional search-based methods intractable.
+However, humans are known to operate intuitively even in the most mathematical of domains~\citep{LakoffNunez00},
+and indeed existing work such as AlphaGo have already shown that deep neural networks can be effective in guiding the search space.
+But humans also transfer knowledge across tasks, facilitating
+much more efficient adaptation and the ability to reason more abstractly.  Foundation models offer the possibility of closing this gap: their multi-purpose nature along with their strong generative and multimodal capabilities offer new leverage for controlling the combinatorial explosion inherent to search.
+
+\paragraph{\hyperref[sec:interaction]{§\ref{sec:interaction}:~Interaction.}}
+Foundation models show clear potential to transform the developer and user experience for AI systems: foundation models lower the difficulty threshold for \textit{prototyping and building} AI applications due to their sample efficiency in adaptation, and raise the ceiling for \textit{novel user interaction} due to their multimodal and generative capabilities.
+This provides a synergy we encourage going forward: developers can provide applications that better fit the \textit{user's needs and values}, while introducing far more dynamic forms of interaction and opportunities for \textit{feedback}.
+
+\paragraph{\hyperref[sec:philosophy]{§\ref{sec:philosophy}:~Philosophy of understanding.}}
+
+What could a foundation model come to understand about the data it is trained on? Focusing on the case of natural language, we identify different positions on the nature of understanding and explore their relevance for our central question. Our tentative conclusion is that skepticism about the capacity of future foundation models to understand natural language may be premature, especially where the models are trained on multi-modal data.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Overview of applications}
+At present, foundation model research is largely confined to computer science and AI, with the impact of foundation models and the applications they support largely being centered in the tech industry.
+Moving forward, foundation models present clear potential to transform and extend the reach of AI across many sectors beyond the tech industry, suggesting a more pervasive effect on people's lives.
+While there is a multitude of applications and domains to consider, we we have chosen three applications \dash{} healthcare, law, and education \dash{} because they represent foundational pillars of our society.  
+For foundation models to significantly contribute to these application domains, models will require specific capabilities (\refsec{capabilities}) as well as technical innovation (\refsec{technology}) to account for the unique considerations in each domain.
+Further, since these domains are critical to societal function (\refsec{society}), applying foundation models in these domains requires engaging with deeply sociotechnical matters such as those those pertaining to data (\refsec{data}), privacy (\refsec{security}), interpretability (\refsec{interpretability}),  fairness (\refsec{fairness}) and ethics (\refsec{ethics}).
+
+\paragraph{\hyperref[sec:healthcare]{§\ref{sec:healthcare}:~Healthcare and biomedicine.}}
+
+Healthcare tasks (\eg~patient care via disease treatment) and biomedical research (\eg~scientific discovery of new therapies) require expert knowledge that is limited and expensive. 
+Foundation models present clear opportunities in these domains due to the \textit{abundance of data} across \textit{many modalities} (\eg~images, text, molecules) to train foundation models, as well as the value of improved sample efficiency in adaptation due to the cost of expert time and knowledge. 
+Further, foundation models may allow for improved \textit{interface design} (\refsec{interaction}) for both healthcare providers and patients to interact with AI systems, and their generative capabilities suggest potential for \textit{open-ended research problems} like drug discovery. 
+Simultaneously, they come with clear risks (\eg~exacerbating historical biases in medical datasets and trials). 
+To responsibly unlock this potential requires engaging deeply with the sociotechnical matters of data sources and privacy as well as model interpretability and explainability, alongside effective regulation of the use of foundation models for both healthcare and biomedicine.
+
+\paragraph{\hyperref[sec:law]{§\ref{sec:law}:~Law.}}
+
+Legal applications require that attorneys read and produce long coherent
+narratives that incorporate shifting contexts and decipher ambiguous legal standards.
+Foundation models may provide benefits in this domain: \textit{ample data} exists in the form of legal documents and their generative capabilities are well-suited to the \textit{many generative tasks required in law}, but significant improvements are required for foundation models to be able to reliably \textit{reason over various sources} of information to generate \textit{truthful} long-form documents.
+As is the care in healthcare (\refsec{healthcare}), the sample efficiency of adaptation for foundation models is of heightened value given the costs of expert time and knowledge in the legal domain, which may allow for the \textit{re-allocation of expertise} towards pressing problems of justice and government service.
+The responsible development of foundation models for law will require specific consideration of privacy, and highlights core limitations of existing foundational models that will require fundamental advances with respect to \textit{provenance} for their behavior and \textit{guarantees} for the factuality of their generation.
+
+\paragraph{\hyperref[sec:education]{§\ref{sec:education}:~Education.}} 
+
+Education is a complex and subtle domain; effective teaching involves reasoning about student cognition and should reflect the learning goals of students.
+The nature of foundation models presents promise here that has yet to be realized in the sphere of AI for education: while certain many streams of data in education are individually too limited to train foundation models, the ability to leverage relevant data from outside the domain (\eg~the Internet) and make use of data across multiple modalities (\eg~textbooks, mathematical formula, diagrams, video-based tutorials) jointly offers hope for foundation models that are broadly applicable to educational tasks.
+If foundation models lead to a significant improvement in education-relevant capabilities, there is clear potential for new applications that align with the open-ended generative (\eg~problem generation) and interactive (\eg~feedback to teachers) aspects of foundation models; the sample efficient adaptation of foundation models suggests greater ability for \textit{adaptive and personalized learning}.
+In this event, renewed consideration is required of hallmarks of applying technology to education (\eg~student privacy), along with certain concerns becoming more critical (\eg~inequity in access to technology in education, technology-aided plagiarism).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Overview of technology}
+
+Now we discuss the technology behind building better model architectures,
+training and adaptation procedures, and of course scaling up the systems.
+One crucial but often overlooked topic is data\dash{}where does it come from and
+what is its composition?
+In addition, we want foundation models to be robust to distribution shifts
+and secure against attackers.
+Finally, we wish to understand why foundation models work from both a mathematical perspective
+as well as an empirical perspective.
+
+\paragraph{\hyperref[sec:modeling]{§\ref{sec:modeling}:~Modeling.}}
+
+What structural properties give rise to a foundation model? In the modeling section, we explore the underlying architectures behind foundation models and identify 5 key attributes. First, we start by discussing \textit{expressivity} of the computational model \dash{} to capture and assimilate real-world information, and \textit{scalability} \dash{} to adeptly handle large quantities of high-dimensional data. These properties are successfully realized by existing architectures such as the transformer network \citep{vaswani2017attention} that underpins most foundation models to date. We then proceed to attributes may be essential for the next generation of models, including: \textit{multimodallity} \dash{} to consume, process and potentially produce content from different sources and domains, \textit{memory} capacity \dash{} to effectively store and retrieve the acquired knowledge, and finally, \textit{compositionality}, to foster successful generalization to novel settings and environments. We believe that realizing the full potential envisioned for foundation models will hinge on modelling advances to fulfill these desiderata.
+
+\paragraph{\hyperref[sec:training]{§\ref{sec:training}:~Training.}}
+
+Training objectives mathematically specify how models should learn and acquire capabilities from their training data.
+The current status quo for training foundation models involves modality-specific objectives (\eg~masked language modeling \citep{devlin2019bert} for text and SimCLR \citep{chen2020simclr} for images) that are often chosen heuristically.
+We envision that future training objectives for foundation models will reflect two changes: \textit{principled selection} derived from systematic evidence and evaluation (\refsec{evaluation}), and \textit{domain-generality} to provide rich, scalable, and unified training signal across data sources and modalities. We also discuss important design trade-offs, including generative vs discriminative training, the choice of input data representation, and the potential of future training objectives that involve explicit representations of goals.
+
+\paragraph{\hyperref[sec:adaptation]{§\ref{sec:adaptation}:~Adaptation.}}
+
+Foundation models are intermediary assets; they are unfinished and generally should not be used directly, instead requiring adaptation for specific downstream tasks.
+The \textit{de facto} approach for adaptation has been fine-tuning, with recent work suggesting that lightweight fine-tuning alternatives and prompting-based methods may achieve favorable accuracy-efficiency tradeoffs.
+Moving forward, we envision a more expansive view of adaptation that goes beyond just specializing foundation models to perform the task of interest: adaptation will alleviate deficiencies of stand-alone foundation models (\eg~\textit{temporal adaptation} to reflect changes over time in the world) or introduce \textit{constraints} (\eg~GDPR compliance relating to the \textit{right to be forgotten}; \refsec{security}); this broader perspective on adaptation coincides with a need for new evaluation protocols (\refsec{evaluation}) that systematically evaluate adaptation methods while controlling for resources (\eg~runtime, memory) and access requirements involved in adaptation.
+
+\paragraph{\hyperref[sec:evaluation]{§\ref{sec:evaluation}:~Evaluation.}}
+
+Evaluation offers context to foundation models by providing a means to track progress, understand models, and document their capabilities and biases. 
+Foundation models challenge the ability of standard evaluation paradigms in machine learning to achieve these goals since they are one step removed from specific tasks. 
+To envision new paradigms in evaluation that suit foundation models, we discuss (a) evaluating foundation models \textit{directly} to measure their \textit{inherent capabilities} and inform how foundation models are trained, (b) evaluating task-specific models by \textit{controlling for adaptation resources and access}, and (c) broader \textit{evaluation design} to provide richer context beyond measures of accuracy (\eg~robustness (\refsec{robustness}), fairness (\refsec{fairness}), efficiency (\refsec{systems}), environmental impact (\refsec{environment})). 
+Reform of evaluation practices will allow for evaluation that adequately serves both the diverse goals and stakeholders involved in the foundation model paradigm.
+
+\paragraph{\hyperref[sec:systems]{§\ref{sec:systems}:~Systems.}}
+
+While the training data (\refsec{data}) determines the theoretical information available for foundation models, and model architectures (\refsec{modeling}) and training objectives (\refsec{training}) determine how much of this information can be extracted, computer systems determine what is practically achievable for foundation models.
+Systems are a key bottleneck for scaling in terms of data and model size, both of which appear to reliably track with improvements in capabilities. 
+To ensure that we can train the next generation of foundation models efficiently with respect to time and cost, we will require the co-design of algorithms, models, software, and hardware.
+This co-design is already starting to happen to in various forms, from carefully tuned DNN designs to new architectures such as retrieval-based models. 
+Beyond training, we consider what will be required to deploy applications on top of foundation models (\eg~efficient inference).
+
+\paragraph{\hyperref[sec:data]{§\ref{sec:data}:~Data.}}
+
+Data is the lifeblood of foundation models; the training data of these models largely determines what these capabilities these models can acquire. 
+The centrality of data is not unique to foundation models; recent calls for {\em data-centric AI}~\citep{ng_data_centric, hazy_data_centric} indicate the pervasive importance of managing, understanding,  and documenting data used to train machine learning models.
+For foundation models specifically, the current \textit{modus operandi} is for training data to be selected using unspecified or unclear principles with a general lack of transparency regarding the nature of training data.
+We believe an alternative approach is needed to re-imagine the data ecosystem surrounding foundation models: we draw upon work on data visualization and management to propose a \textit{data hub} for foundation models.
+We articulate how this proposal relates to many of the relevant data-centric considerations for foundation models: selection, curation, documentation, access, visualization and inspection, quality assessment, and legal regulation.
+
+\paragraph{\hyperref[sec:security]{§\ref{sec:security}:~Security and privacy.}}
+
+Security and privacy for foundation models is largely uncharted at present.
+Fundamentally, foundation models are a high-leverage \textit{single point of failure}, making them a prime target for attack: existing work demonstrates a variety of security vulnerabilities (\eg~adversarial triggers to generate undesirable outputs) or privacy risks (\eg~memorization of training data) for these models.
+Further, the generality of foundation models compounds these concerns, intensifying the risk for \textit{function creep or dual use} (\ie~use for unintended purposes).
+For security, we view foundation models as akin to \emph{operating systems} in traditional software systems; we discuss steps towards secure foundation models which, if achieved, would provide a strong abstraction layer to build upon for reliable ML applications. 
+For privacy, by leveraging knowledge transfer from public data, foundation models may enable more sample efficient adaptation to sensitive data distributions, \ie~privacy-preserving applications may incur less degradation in accuracy when built using foundation models.
+
+\paragraph{\hyperref[sec:robustness]{§\ref{sec:robustness}:~Robustness to distribution shifts.}}
+
+A major limitation of standard machine learning is that it produces models that are not robust to \emph{distribution shifts}, where the training distribution does not match the test distribution (for the downstream task). 
+Existing work shows that adapting a foundation model trained on a broad range of unlabeled data improves the robustness of adapted models across a wide variety of shifts. 
+This opens a new set of promising directions for improving training and adaptation of foundation models for robustness. 
+However, we do not believe that foundation models are a panacea for robustness\dash{}challenges such as extrapolation across time and spurious correlations are not likely to be fully addressed. 
+
+\paragraph{\hyperref[sec:ai-safety]{§\ref{sec:ai-safety}:~AI safety and alignment.}}
+
+Ensuring foundation models are reliable (\refsec{systems}), robust (\refsec{robustness}), and interpretable (\refsec{interpretability}) is increasingly important when considering the potential real-world applications of these models.
+In addition to critical and immediate considerations, we also consider the relationship between foundation models and larger-scale risks, hazards, and harms that have the potential for increased relevance as model capabilities continue to advance.
+For example, we consider the importance of \textit{aligning} foundation models such that they are not deployed with \textit{misspecified goals or values}. We also discuss the relevance of \textit{forecasting the emergent behaviors} of foundation models (\eg~the ability to deceive or plan strategically), which may complicate attempts to adapt them to particular tasks, and may require new approaches for interpretability (\refsec{interpretability}) or evaluation (\refsec{evaluation}).
+
+\paragraph{\hyperref[sec:theory]{§\ref{sec:theory}:~Theory.}}
+
+Learning theory provides a broad foundation for the variety of contexts encountered in applied machine learning; theory offers both understanding, principles, and guarantees to complement empirical findings.
+At present, the study of foundation models is largely empirical: the theory of standard supervised learning, while relatively mature, is inadequate to fully explain foundation models.
+Specifically, the discrepancy between the training phase and the adaptation phase within the foundation model regime pinpoints the insufficiency of existing theory, since these phases correspond to (potentially) completely different tasks and data distributions.
+Nevertheless, we endeavor that advances in theory to address this discrepancy, even in simple, limited settings, will provide useful insights. 
+
+\paragraph{\hyperref[sec:interpretability]{§\ref{sec:interpretability}:~Interpretability.}}
+
+Interpretability provides clarity to foundation models: the opacity of the deep neural networks that underpin foundation models, alongside the expected ubiquity of foundation models, heightens the need to understand these models and their capabilities.
+Interpretability methods at present generally are designed for interpreting and explaining the behavior of task-specific models; the nature of foundation models (\ie~the wide array of tasks these models are beneficial for and the unexpected emergent properties they acquire) introduces new challenges for interpretability research.
+To frame the discussion of interpretability for foundation models, we propose the \textit{one model-many models} paradigm, which aims to determine the extent to which the \textit{one model} (the foundation model) and its \textit{many models} (its adapted derivatives) share decision-making building blocks.
+In addition to interpreting the decision-making components involved, we further discuss \textit{explainability} in the context of foundation models (\eg~the validity of\textit{post hoc} explanations generated by models) as well as the \textit{mechanisms} that drive model behavior (which may clarify the extent to which understanding foundation models can extend to understanding their adapted derivatives). 
+Given the critical role we ascribe interpretability in the study of foundation models, we conclude with an assessment of the societal impact of interpretability and non-interpretability. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Overview of society}
+
+We believe the rapid development of foundation models, adapted and
+deployed to various applications, will have wide-ranging consequences on the
+health of societies.  What makes these models so exciting and also so troubling
+is their task agnosticity.  Societal impact is easier (but still non-trivial)
+to understand and reason about when we talk about specific systems deployed to
+users, but how can we take into account the societal impact of all
+possible systems and use cases when developing foundation models?
+
+\paragraph{\hyperref[sec:fairness]{§\ref{sec:fairness}:~Inequity and fairness.}}
+
+In many contexts, machine learning has been shown to contribute to, and potentially amplify, societal inequity.
+Foundation models may extend this trend, \ie~furthering the unjust treatment of people who have been historically discriminated against.
+However, understanding the relationship between inequity and foundation models requires reckoning with the abstraction of foundation models; foundation models are intermediary assets that are adapted for applications that impact users.
+Therefore, we delineate \textit{intrinsic biases}, \ie~properties in foundation models that portend harm, and \textit{extrinsic harms}, \ie~harms arising in the context of specific applications built using foundation models.
+We taxonomize various sources (\eg~training data, lack of diversity among foundation model developers, the broader sociotechnical context) that give rise to these biases and harms, emphasizing the importance, and technical difficulty, of \textit{source tracing} to understand ethical and legal responsibility.
+We do not view unfairness as inevitable in the foundation model paradigm: to address unfair outcomes that arise from foundation models, we dually consider \textit{proactive interventions} (\eg~technical methods like counterfactual data augmentation) and \textit{reactive recourse} (\eg~mechanisms for feedback propagation and attribution of moral/legal responsibility). 
+
+\paragraph{\hyperref[sec:misuse]{§\ref{sec:misuse}:~Misuse.}}
+
+We define foundation model misuse as the use of foundation models as they are technically intended (\eg to generate language or video), but with the goal of causing societal harm (\eg to generate disinformation, to develop deepfakes for harassment). 
+We argue that advances in foundation models will result in higher-quality machine-generated content that will be easier to create and personalize for misuse purposes. 
+For example, disinformation actors may use them to quickly generate collections of articles targeted across different demographic groups (\eg nationality, political party, religion, etc.). 
+While these new capabilities may limit existing human detection methods for harmful content (\eg tracking similar text across different sources), foundation models may themselves provide promising potential as automated misuse detectors.
+
+\paragraph{\hyperref[sec:environment]{§\ref{sec:environment}:~Environment.}}
+
+Foundation models are the byproducts of computationally expensive training regimes, with the existing trajectory favoring even more intensive models; the energy required for this training coincides with the release of more carbon into the atmosphere and the degradation of the environment.
+At present, current discussion centers these enormous single-time training costs and the potential to amortize these costs across repeated use.
+We seek to clarify these discussions by identifying assumptions that shape the calculus of environmental impact for foundation models.
+Further, we envision that the ecosystem surrounding foundation models requires a multi-faceted approach: (a) more \textit{compute-efficient} models, hardware, and energy grids all may mitigate the carbon burden of these models, (b) environmental cost should be a clear factor that informs how foundation models are evaluated (\refsec{evaluation}), such that foundation models can be more comprehensively juxtaposed with more environment-friendly baselines, and (c) the cost-benefit analysis surrounding environmental impact necessitates greater \textit{documentation and measurement} across the community.
+
+\paragraph{\hyperref[sec:legality]{§\ref{sec:legality}:~Legality.}}
+
+Foundation models rest on tenuous legal footings at present; how the law bears on both the development and use of these models is largely unclear.
+Legal and regulatory frameworks for foundation models specifically, alongside those for AI technology more generally, will be needed to influence, constrain, and even foster practices in research, development, and deployment.
+Centering on the legal landscape of the United States, where existing consideration of algorithmic tools remains broadly uncertain, we highlight the pertinent issues of \textit{liability} for model predictions and \textit{protections} from model behavior.
+With respect to both issues, we describe how legal standards will need to be advanced to address these given the intermediary status of foundation models (as opposed to that of user-facing task-specific models). 
+
+\paragraph{\hyperref[sec:economics]{§\ref{sec:economics}:~Economics.}}
+
+Foundation models are likely to have substantial economic impact due to their novel capabilities and potential applications in a wide variety of industries and occupations. 
+We consider the implications of the development and use of foundation models for the future of the US and global economy with a focus on productivity, wage inequality, and concentration of ownership.
+
+\paragraph{\hyperref[sec:ethics]{§\ref{sec:ethics}:~Ethics of scale.}}
+
+In addition to running the risk of increasing inequity, as discussed in \refsec{fairness}, the widespread adoption of foundation models poses other ethical, political and social concerns.  We discuss ethical issues related to the scale of application of foundation models, such as homogenization and the concentration of power, as well as the norms and release strategies appropriate to address them.
